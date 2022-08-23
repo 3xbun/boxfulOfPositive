@@ -10,19 +10,6 @@
 
     <main>
       <div class="cards">
-        <!-- <div
-          v-for="(message, index) in messages"
-          :key="index"
-          class="card"
-          :class="'card-' + index"
-          :style="{
-            backgroundColor: colors[Math.floor(Math.random() * colors.length)],
-            transform: `rotate(${Math.floor(
-              Math.random() * (3 - -3 + 1) + -3
-            )}deg)`,
-          }"
-        > -->
-
         <div
           v-for="(message, index) in messages"
           :key="index"
