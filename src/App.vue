@@ -1,47 +1,106 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+  <div class="container">
+    <header>
+      <h1>BOXFUL OF POSITIVITY</h1>
+      <p>
+        Take a break of your day and check out what our sisters around the globe
+        have to tell you today!
+      </p>
+    </header>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
+    <main>
+      <div class="cards">
+        <!-- <div
+          v-for="(message, index) in messages"
+          :key="index"
+          class="card"
+          :class="'card-' + index"
+          :style="{
+            backgroundColor: colors[Math.floor(Math.random() * colors.length)],
+            transform: `rotate(${Math.floor(
+              Math.random() * (3 - -3 + 1) + -3
+            )}deg)`,
+          }"
+        > -->
 
-  <main>
-    <TheWelcome />
-  </main>
+        <div
+          v-for="(message, index) in messages"
+          :key="index"
+          class="card"
+          :class="'card-' + index"
+          :style="{
+            backgroundColor: message.bg,
+            transform: `rotate(${message.rt}deg)`,
+          }"
+        >
+          <p>{{ message.msg }}</p>
+          <p class="author">- {{ message.author }}</p>
+        </div>
+      </div>
+      <form @submit.prevent="addCard(msg)">
+        <input
+          v-model="msg"
+          class="search-bar"
+          type="text"
+          id="text"
+          placeholder="Type something positive!"
+        />
+      </form>
+    </main>
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
+<script setup>
+import { ref } from "vue";
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
+const addCard = (m) => {
+  const card = {
+    msg: m,
+    author: "Anonymous",
+    bg: colors.value[Math.floor(Math.random() * colors.value.length)],
+    rt: Math.floor(Math.random() * (3 - -3 + 1) + -3),
+  };
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+  messages.value.push(card);
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
+  msg.value = "";
+};
 
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
+const colors = ref([
+  "#df8c0c",
+  "#f0eb8d",
+  "#ad84b5",
+  "#a7c967",
+  "#dd91b7",
+  "#7dc4ea",
+]);
+
+const msg = ref("");
+
+const messages = ref([
+  {
+    msg: "Here a nice day",
+    author: "Angie",
+    bg: "#a7c967",
+    rt: "-2",
+  },
+  {
+    msg: "Don't forget to smile :)",
+    author: "Anonymouse",
+    bg: "#df8c0c",
+    rt: "1",
+  },
+  {
+    msg: "Have a good weekend girls!",
+    author: "Mrs. Sama",
+    bg: "#f0eb8d",
+    rt: "0",
+  },
+  {
+    msg: "Hope everyone's day is going well",
+    author: "Pat",
+    bg: "#ad84b5",
+    rt: "1",
+  },
+]);
+</script>
